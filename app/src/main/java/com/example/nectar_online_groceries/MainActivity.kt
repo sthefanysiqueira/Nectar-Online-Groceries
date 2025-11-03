@@ -29,11 +29,11 @@ class MainActivity : ComponentActivity() {
                                 onEnterClick = { user ->
                                     Log.i("MainActivity", "User signed in: $user")
                                     navController.navigate("homeScreen")
-                                    composable("homeScreen") {
-                                        HomeScreen()
-                                    }
                                 },
                             )
+                        }
+                        composable("homeScreen") {
+                            HomeScreen()
                         }
                     }
                 }
