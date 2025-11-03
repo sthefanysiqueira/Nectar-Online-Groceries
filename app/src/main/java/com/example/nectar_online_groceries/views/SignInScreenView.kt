@@ -20,9 +20,6 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,22 +32,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nectar_online_groceries.R
 import com.example.nectar_online_groceries.User
 import com.example.nectar_online_groceries.ui.theme.NectarOnlineGroceriesTheme
+import com.example.nectar_online_groceries.viewmodel.UserViewModel
 
 @Composable
 fun SignInScreen(
-    onEnterClick: (User) -> Unit
+    viewModel: UserViewModel,
+    onEnterClick: (User) -> Unit,
+    onForgotClick: () -> Unit,
+    onRegisterClick: () -> Unit
 ) {
     Column {
-        var username by remember {
-            mutableStateOf("")
-        }
-
-        var password by remember {
-            mutableStateOf("")
-        }
+        val username by viewModel.username
+        val password by viewModel.password
+        val errorMessage by viewModel.errorMessage
 
         val image = painterResource(id = R.drawable.logo_icon)
 
@@ -86,9 +84,7 @@ fun SignInScreen(
 
         TextField(
             value = username,
-            onValueChange = { newValue ->
-                username = newValue
-            },
+            onValueChange = { viewModel.username.value = it },
             Modifier
                 .padding(start = 25.dp, top = 40.dp, end = 25.dp)
                 .fillMaxWidth(),
@@ -110,17 +106,16 @@ fun SignInScreen(
         )
 
         TextField(
-            value = password, onValueChange = { it: String ->
-                password = it
-            },
+            value = password,
+            onValueChange = { viewModel.password.value = it },
             Modifier
                 .padding(start = 25.dp, top = 30.dp, end = 25.dp)
                 .fillMaxWidth(),
             colors = TextFieldDefaults.colors(
-                focusedContainerColor = Color.Transparent, // Fundo quando focado
-                unfocusedContainerColor = Color.Transparent, // Fundo quando não focado
-                focusedIndicatorColor = colorResource(id = R.color.green_button_color), // Borda quando focado
-                unfocusedIndicatorColor = colorResource(id = R.color.text_field_border_color) // Borda quando não focado
+                focusedContainerColor = Color.Transparent,
+                unfocusedContainerColor = Color.Transparent,
+                focusedIndicatorColor = colorResource(id = R.color.green_button_color),
+                unfocusedIndicatorColor = colorResource(id = R.color.text_field_border_color)
             ),
             label = {
                 Text("Senha")
@@ -134,11 +129,19 @@ fun SignInScreen(
             }
         )
 
+        if (errorMessage.isNotBlank()) {
+            Text(
+                text = errorMessage,
+                color = Color.Red,
+                modifier = Modifier.padding(start = 25.dp, top = 10.dp)
+            )
+        }
+
         Button(
             modifier = Modifier
                 .align(alignment = Alignment.End)
                 .padding(top = 20.dp, end = 25.dp),
-            onClick = { /* Ação de esqueci minha senha */ },
+            onClick = onForgotClick,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Transparent,
                 contentColor = colorResource(id = R.color.grey),
@@ -154,14 +157,7 @@ fun SignInScreen(
         }
 
         Button(
-            onClick = {
-                onEnterClick(
-                    User(
-                        username = username,
-                        password = password
-                    )
-                )
-            },
+            onClick = { viewModel.validateLogin { onEnterClick(it) } },
             colors = ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.green_button_color),
                 contentColor = colorResource(id = R.color.white_button_text_color),
@@ -177,6 +173,25 @@ fun SignInScreen(
                 fontSize = 16.dp.value.sp,
             )
         }
+
+        Button(
+            modifier = Modifier
+                .align(alignment = Alignment.CenterHorizontally)
+                .padding(top = 25.dp),
+            onClick = onRegisterClick,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Transparent,
+                contentColor = colorResource(id = R.color.grey),
+            ),
+        ) {
+            Text(
+                text = "Não tem uma conta? Cadastre-se",
+                color = colorResource(id = R.color.grey),
+                fontFamily = FontFamily.SansSerif,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 14.dp.value.sp,
+            )
+        }
     }
 }
 
@@ -185,7 +200,9 @@ fun SignInScreen(
 fun SignInScreenPreview() {
     NectarOnlineGroceriesTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            SignInScreen(onEnterClick = {})
+            SignInScreen(
+                viewModel(), onEnterClick = {}, onForgotClick = {}, onRegisterClick = {},
+            )
         }
     }
 }
