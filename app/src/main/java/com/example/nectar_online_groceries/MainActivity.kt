@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.nectar_online_groceries.ui.theme.NectarOnlineGroceriesTheme
+import com.example.nectar_online_groceries.views.HomeScreen
 import com.example.nectar_online_groceries.views.SignInScreen
 
 class MainActivity : ComponentActivity() {
@@ -29,7 +30,13 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = navController, startDestination = "signIn") {
                         composable("signIn") {
                             SignInScreen(
-                                onEnterClick = {},
+                                onEnterClick = { user ->
+                                    Log.i("MainActivity", "User signed in: $user")
+                                    navController.navigate("homeScreen")
+                                    composable("homeScreen") {
+                                        HomeScreen()
+                                    }
+                                },
                             )
                         }
                     }

@@ -13,4 +13,5 @@
     <color name="light_grey">#7C7C7C</color>
     <color name="green_button_color">#53B175</color>
     <color name="text_field_border_color">#E2E2E2</color>
+    <color name="localization_color">#4C4F4D</color>
 </resources>
