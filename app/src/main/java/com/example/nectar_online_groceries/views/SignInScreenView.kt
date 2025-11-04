@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.nectar_online_groceries.R
-import com.example.nectar_online_groceries.User
+import com.example.nectar_online_groceries.data.User
 import com.example.nectar_online_groceries.ui.theme.NectarOnlineGroceriesTheme
 import com.example.nectar_online_groceries.viewmodel.UserViewModel
 

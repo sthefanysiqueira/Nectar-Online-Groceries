@@ -2,7 +2,7 @@ package  com.example.nectar_online_groceries.viewmodel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.nectar_online_groceries.User
+import com.example.nectar_online_groceries.data.User
 
 class UserViewModel : ViewModel() {
     var username = mutableStateOf("")

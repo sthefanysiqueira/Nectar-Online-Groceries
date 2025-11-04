@@ -1,4 +1,4 @@
-package com.example.nectar_online_groceries
+package com.example.nectar_online_groceries.data
 
 data class User (
     val username: String,
