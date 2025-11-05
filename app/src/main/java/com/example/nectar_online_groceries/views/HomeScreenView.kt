@@ -125,12 +125,6 @@ fun ProductCard(product: Product, modifier: Modifier = Modifier) {
 
 @Composable
 fun ProductRow(products: List<Product>, modifier: Modifier = Modifier) {
-//    Row(modifier = modifier.padding(24.dp)) {
-//        for (product in products) {
-//            ProductCard(product = product)
-//            Spacer(modifier = Modifier.width(15.dp))
-//        }
-//    }
     LazyRow(
         modifier = modifier
             .padding(start = 24.dp, top = 20.dp, bottom = 20.dp),
