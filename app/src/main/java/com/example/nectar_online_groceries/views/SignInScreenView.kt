@@ -20,6 +20,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,9 +47,9 @@ fun SignInScreen(
     onRegisterClick: () -> Unit
 ) {
     Column {
-        val username by viewModel.username
-        val password by viewModel.password
-        val errorMessage by viewModel.errorMessage
+        val username by viewModel.username.observeAsState("")
+        val password by viewModel.password.observeAsState("")
+        val errorMessage by viewModel.errorMessage.observeAsState("")
 
         val image = painterResource(id = R.drawable.logo_icon)
 
@@ -84,7 +85,7 @@ fun SignInScreen(
 
         TextField(
             value = username,
-            onValueChange = { viewModel.username.value = it },
+            onValueChange = { viewModel.onUsernameChange(it) },
             Modifier
                 .padding(start = 25.dp, top = 40.dp, end = 25.dp)
                 .fillMaxWidth(),
@@ -107,7 +108,7 @@ fun SignInScreen(
 
         TextField(
             value = password,
-            onValueChange = { viewModel.password.value = it },
+            onValueChange = { viewModel.onPasswordChange(it) },
             Modifier
                 .padding(start = 25.dp, top = 30.dp, end = 25.dp)
                 .fillMaxWidth(),

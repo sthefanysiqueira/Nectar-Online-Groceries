@@ -38,10 +38,10 @@ class MainActivity : ComponentActivity() {
                                     }
                                 },
                                 onForgotClick = {
-                                    userViewModel.errorMessage.value = "Link funcionando e redirecionamento feito!"
+                                    userViewModel.setErrorMessage("Link funcionando e redirecionamento feito!")
                                 },
                                 onRegisterClick = {
-                                    userViewModel.errorMessage.value = "Link funcionando e redirecionamento feito!"
+                                    userViewModel.setErrorMessage("Link funcionando e redirecionamento feito!")
                                 }
                             )
                         }
