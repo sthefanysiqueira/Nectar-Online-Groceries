@@ -1,4 +1,4 @@
-package com.example.nectar_online_groceries.views
+package com.example.nectar_online_groceries.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
